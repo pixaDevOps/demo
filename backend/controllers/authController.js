@@ -1,5 +1,5 @@
 // controllers/authController.js
-const pool = require('../db');
+const pool = require('../db.js');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -9,9 +9,11 @@ exports.register = async (req, res) => {
   try {
     const hashed = await bcrypt.hash(password, 10);
 
-   await db.query(
-  `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}')`
+  await db.query(
+  `INSERT INTO users (name, email, password) VALUES ($1, $2, $3)`,
+  [name, email, hashedPassword]
 );
+
 
 
     res.json({ message: 'User registered successfully' });
