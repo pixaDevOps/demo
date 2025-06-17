@@ -9,10 +9,10 @@ exports.register = async (req, res) => {
   try {
     const hashed = await bcrypt.hash(password, 10);
 
-    await pool.query(
-      'INSERT INTO users (name, email, password) VALUES ($1, $2, $3)',
-      [name, email, hashed]
-    );
+   await db.query(
+  `INSERT INTO users (name, email, password) VALUES ('${name}', '${email}', '${hashedPassword}')`
+);
+
 
     res.json({ message: 'User registered successfully' });
   } catch (err) {
